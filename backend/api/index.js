@@ -14,7 +14,12 @@ dbConnection(process.env.MONO_URL);
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: " http://192.168.1.217:5173", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://192.168.1.217:5173", process.env.FRONTEND_URL],
+    credentials: true,
+  }),
+);
 
 app.get("/", (req, res) => {
   res.json({
