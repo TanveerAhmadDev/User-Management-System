@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
-import UserDashboard from "./pages/userDashboard";
+import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
 import ProtectedRoute from "./ProtectedRoute";
