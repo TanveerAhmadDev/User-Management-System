@@ -6,6 +6,8 @@ import { Eye, EyeOff, AlertCircle, Loader2 } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "@/components/ThemeToggle";
+import api from "../utils/api.js";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,12 +24,15 @@ const LoginPage = () => {
     }
     try {
       setLoading(true);
-      const result = await axios.post(
-        `${import.meta.env.VITE_API_URL}/admin/login`,
+      const result = await api.post(
+        `/admin/login`,
         { email, password },
         { withCredentials: true },
       );
-      const user = result?.data?.data?.user;
+
+      const { accessToken, user } = result.data.data;
+
+      localStorage.setItem("accessToken", accessToken);
       if (!user) {
         setError("User information was not found.");
         return;

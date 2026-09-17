@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "sonner";
 import axios from "axios";
+import api from "@/utils/api";
 
 const AdminDashboard = () => {
   const [search, setSearch] = useState("");
@@ -36,17 +37,6 @@ const AdminDashboard = () => {
   });
 
   // ================= SEARCH =================
-
-  // const filteredUsers = useMemo(() => {
-  //   const value = search.toLowerCase();
-
-  //   return users.filter(
-  //     (user) =>
-  //       user.name.toLowerCase().includes(value) ||
-  //       user.username.toLowerCase().includes(value) ||
-  //       user.email.toLowerCase().includes(value),
-  //   );
-  // }, [users, search]);
 
   const handleSearch = async (value) => {
     setSearch(value);
@@ -94,13 +84,9 @@ const AdminDashboard = () => {
     }
 
     try {
-      const createUserPromise = axios.post(
-        `${import.meta.env.VITE_API_URL}/admin/addUser`,
-        newUser,
-        {
-          withCredentials: true,
-        },
-      );
+      const createUserPromise = api.post(`/admin/addUser`, newUser, {
+        withCredentials: true,
+      });
 
       toast.promise(createUserPromise, {
         loading: "Creating user...",
@@ -210,12 +196,9 @@ const AdminDashboard = () => {
     if (!deleteUser) return;
 
     try {
-      const deleteUserPromise = axios.delete(
-        `${import.meta.env.VITE_API_URL}/admin/users/${deleteUser._id}`,
-        {
-          withCredentials: true,
-        },
-      );
+      const deleteUserPromise = api.delete(`/admin/users/${deleteUser._id}`, {
+        withCredentials: true,
+      });
 
       toast.promise(deleteUserPromise, {
         loading: "Deleting user...",
@@ -244,8 +227,8 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/admin/logout`,
+      await api.post(
+        `/admin/logout`,
         {},
         {
           withCredentials: true,
@@ -269,10 +252,8 @@ const AdminDashboard = () => {
   useEffect(() => {
     const timer = setTimeout(async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/admin/users?search=${encodeURIComponent(
-            search,
-          )}`,
+        const response = await api.get(
+          `/admin/users?search=${encodeURIComponent(search)}`,
           {
             withCredentials: true,
           },
@@ -294,10 +275,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const usersFetch = async () => {
       try {
-        const result = await axios.get(
-          `${import.meta.env.VITE_API_URL}/admin/users`,
-          { withCredentials: true },
-        );
+        const result = await api.get(`/admin/users`, { withCredentials: true });
         setUsers(result?.data?.data);
       } catch (error) {
         console.log(error);

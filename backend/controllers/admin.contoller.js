@@ -49,7 +49,9 @@ export const login = asyncHandler(async (req, res, next) => {
 
   return res
     .status(200)
-    .json(new apiResponse(200, "User login successfully.", { user }));
+    .json(
+      new apiResponse(200, "User login successfully.", { accessToken, user }),
+    );
 });
 
 export const addUser = asyncHandler(async (req, res, next) => {
@@ -89,8 +91,6 @@ export const addUser = asyncHandler(async (req, res, next) => {
 
 export const getUsers = asyncHandler(async (req, res, next) => {
   const { search } = req.query;
-
-  console.log("Search:", search);
 
   const query = {
     _id: { $ne: req.user._id },

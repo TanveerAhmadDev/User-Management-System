@@ -7,15 +7,15 @@ import {
   logout,
   updateUser,
 } from "../controllers/admin.contoller.js";
-import { verifyAdmin } from "../middlewares/verifyAdmin.js";
+import verifyJWT from "../middlewares/verifyAdmin.js";
 
 const adminRouter = express.Router();
 
-adminRouter.post("/addUser", verifyAdmin, addUser);
+adminRouter.post("/addUser", verifyJWT, addUser);
 adminRouter.post("/login", login);
-adminRouter.get("/users", verifyAdmin, getUsers);
+adminRouter.get("/users", verifyJWT, getUsers);
 adminRouter.post("/logout", logout);
-adminRouter.patch("/users/:id", verifyAdmin, updateUser);
-adminRouter.delete("/users/:id", verifyAdmin, deleteUser);
+adminRouter.patch("/users/:id", verifyJWT, updateUser);
+adminRouter.delete("/users/:id", verifyJWT, deleteUser);
 
 export default adminRouter;
