@@ -147,8 +147,8 @@ const AdminDashboard = () => {
     }
 
     try {
-      const updateUserPromise = axios.patch(
-        `${import.meta.env.VITE_API_URL}/admin/users/${editUser._id}`,
+      const updateUserPromise = api.patch(
+        `/admin/users/${editUser._id}`,
         updateData,
         {
           withCredentials: true,
